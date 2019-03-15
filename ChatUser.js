@@ -56,6 +56,7 @@ class ChatUser {
   handleMessage(jsonData) {
     let msg = JSON.parse(jsonData);
 
+    if (msg.text === "/joke") this.handleJoke()
     if (msg.type === 'join') this.handleJoin(msg.name);
     else if (msg.type === 'chat') this.handleChat(msg.text);
     else throw new Error(`bad message: ${msg.type}`);
@@ -69,6 +70,12 @@ class ChatUser {
       type: 'note',
       text: `${this.name} left ${this.room.name}.`
     });
+  }
+
+  handleJoke() {
+    let joke = `People who put empty containers back into the fridge
+                are probably going to hell. Sorry, I don't make the rules.`;
+    this.send(JSON.stringify(joke));
   }
 }
 
